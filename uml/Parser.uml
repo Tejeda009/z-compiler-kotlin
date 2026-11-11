@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/home/t3j3da/IdeaProjects/z-compiler/src/Parser</OriginalElement>
+  <nodes>
+    <node x="388.8648996109568" y="1117.9245908853284">src.Parser.VariableParser</node>
+    <node x="326.96934879881917" y="435.14852153174445">src.Parser.HeaderParser</node>
+    <node x="-30.157806391360253" y="366.13879216859675">src.Parser.LoopParser</node>
+    <node x="212.77640923702106" y="-13.082460317673394">src.Parser.Parser</node>
+    <node x="155.18955157049356" y="1212.8993431907506">src.Parser.StructType</node>
+    <node x="317.5401997049047" y="777.0791336846942">src.Parser.DefinitionParser</node>
+    <node x="110.37236460476693" y="1353.9749917412091">src.Parser.ZType</node>
+    <node x="409.50673307769256" y="940.502635401173">src.Parser.ExpressionParser</node>
+    <node x="-35.04532915201554" y="1139.2568547748956">src.Parser.TypeRef</node>
+    <node x="253.48343969403908" y="575.0763731205922">src.Parser.ParserContext</node>
+    <node x="513.3404732049987" y="635.8321427674575">src.Parser.ArrayParser</node>
+    <node x="-76.96812575583533" y="554.4892831733268">src.Parser.StructRegistry</node>
+    <node x="305.28947197195885" y="1363.9062277807411">src.Parser.RetParser</node>
+    <node x="137.99199631566222" y="1000.6619585473122">src.Parser.TypeParser</node>
+    <node x="-92.80953710411796" y="691.8579216902622">src.Parser.BranchesParser</node>
+    <node x="53.134503724573364" y="860.7863089518636">src.Parser.StructParser</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="src.Parser.StructType" target="src.Parser.TypeRef" relationship="REALIZATION">
+      <point x="4.4842950645218593E-4" y="-39.50034319075064" />
+      <point x="233.19" y="1191.0" />
+      <point x="21.455000000000013" y="1191.0" />
+      <point x="3.29152015552836E-4" y="14.000145225104347" />
+    </edge>
+    <edge source="src.Parser.ZType" target="src.Parser.TypeRef" relationship="REALIZATION">
+      <point x="-38.68236460476693" y="-303.4999917412092" />
+      <point x="137.69" y="1191.0" />
+      <point x="21.455000000000013" y="1191.0" />
+      <point x="3.29152015552836E-4" y="14.000145225104347" />
+    </edge>
+  </edges>
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="0.45162907268170427" showDependencies="false" x="355.5" y="983.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

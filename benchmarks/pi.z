@@ -1,0 +1,21 @@
+extern printf(str | ...) -> int32
+
+proc compute(int64 iterations) -> flt64 {
+    flt64 pi -> 0.0;
+    flt64 sign -> 1.0;
+
+    for (int64 i -> 0 | i < iterations | i + 1) {
+        pi -> pi + (sign / (2 * i + 1));
+        sign -> -sign;
+    }
+
+    ret pi * 4.0;
+}
+
+proc main() {
+    int64 passes -> 100000000;
+    flt64 result -> compute(passes);
+
+    printf("%.9f\n" | result);
+    ret 0;
+}

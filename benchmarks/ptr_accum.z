@@ -1,0 +1,17 @@
+extern printf(str | ...) -> int32
+
+proc accumulate(mut int64* acc | int64 value) -> void {
+    *acc -> *acc + (value * value) % 7;
+}
+
+proc main(int32 argc) {
+    int64 seed -> argc;
+    int64 total -> 0;
+
+    for (int64 i -> 0 | i < 300000000 | i + 1) {
+        accumulate(&total | i + seed);
+    }
+
+    printf("%lld\n" | total);
+    ret 0;
+}

@@ -1,0 +1,21 @@
+extern printf(str | ...) -> int32
+extern strlen(str) -> uint64
+
+proc main() {
+    str a -> "alpha-0123456789";
+    str b -> "beta-ABCDEFGHIJ";
+    str c -> "gamma-klmnopqrstuvwxyz";
+    int64 iterations -> 5000000;
+    int64 checksum -> 0;
+
+    for (int64 i -> 0 | i < iterations | i + 1) {
+        str ab -> a + b;
+        str abc -> ab + c;
+        free(ab);
+        checksum -> checksum + strlen(abc);
+        free(abc);
+    }
+
+    printf("%lld\n" | checksum);
+    ret 0;
+}

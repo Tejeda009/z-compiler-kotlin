@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/home/t3j3da/IdeaProjects/z-compiler</OriginalElement>
+  <nodes>
+    <node x="-144.5" y="546.0">src.AST.FieldAccessExprAST</node>
+    <node x="2753.0" y="546.0">src.AST.StructLiteralAST</node>
+    <node x="2637.0" y="486.0">src.AST.ExternExprAST</node>
+    <node x="2842.0" y="226.0">Tests.TestCodeGen</node>
+    <node x="2647.5" y="226.0">src.Parser.StructParser</node>
+    <node x="2570.5" y="166.0">src.Parser.Parser</node>
+    <node x="2441.5" y="226.0">src.AST.PrototypeAST</node>
+    <node x="2361.5" y="166.0">src.Codegen.IRBuilder</node>
+    <node x="2808.0" y="366.0">Tests.TestAstCoverage</node>
+    <node x="2695.0" y="306.0">Tests.TestVarRefExpr</node>
+    <node x="2545.5" y="546.0">src.AST.FunctionAST</node>
+    <node x="2570.0" y="366.0">Tests.TestBenchmarks</node>
+    <node x="-18.0" y="366.0">src.AST.ExprAST</node>
+    <node x="2440.0" y="306.0">src.Parser.ParserInternalsTest</node>
+    <node x="1901.0" y="546.0">src.AST.DerefExprAST</node>
+    <node x="2018.0" y="486.0">src.AST.BlockAST</node>
+    <node x="2240.5" y="226.0">src.Main.ModuleLoader</node>
+    <node x="2334.0" y="366.0">Tests.TestMoreParser</node>
+    <node x="2142.5" y="166.0">src.Main.CompilerCmd</node>
+    <node x="1599.0" y="546.0">src.AST.ArrayAST</node>
+    <node x="2040.5" y="226.0">src.AST.LLVMTextUnit</node>
+    <node x="447.5" y="486.0">src.AST.CallExprAST</node>
+    <node x="-4.5" y="486.0">src.AST.AssignExprAST</node>
+    <node x="746.5" y="546.0">src.AST.ForAST</node>
+    <node x="1953.5" y="166.0">Tests.TestStdLib</node>
+    <node x="1875.5" y="226.0">src.Codegen.Loop</node>
+    <node x="1675.5" y="486.0">src.AST.AssignThroughPointerExprAST</node>
+    <node x="2207.5" y="306.0">src.Parser.ExpressionParser</node>
+    <node x="73.0" y="226.0">src.Parser.StructType</node>
+    <node x="1219.5" y="486.0">src.AST.StructDeclAST</node>
+    <node x="312.0" y="546.0">src.AST.NumberExprAST</node>
+    <node x="1745.5" y="166.0">src.Codegen.SymbolTable</node>
+    <node x="2089.0" y="366.0">Tests.TestAstCodeGen</node>
+    <node x="1651.5" y="226.0">src.AST.ModuleAST</node>
+    <node x="1965.5" y="306.0">src.Main.CompilerCmdTest</node>
+    <node x="2101.0" y="546.0">src.AST.AddressOfExprAST</node>
+    <node x="16.5" y="46.0">src.Main.Main</node>
+    <node x="2771.0" y="166.0">src.Parser.ZType</node>
+    <node x="1554.5" y="166.0">Tests.TestTypes</node>
+    <node x="1441.0" y="226.0">Tests.TestExamples</node>
+    <node x="1348.5" y="166.0">Tests.TestBinding</node>
+    <node x="1872.5" y="366.0">src.AST.Conditions</node>
+    <node x="923.0" y="546.0">src.AST.AllocExprAST</node>
+    <node x="1760.0" y="306.0">Tests.TestAstNodes</node>
+    <node x="1254.5" y="226.0">src.AST.ImportAST</node>
+    <node x="1656.0" y="366.0">Tests.TestStructType</node>
+    <node x="1528.5" y="306.0">Tests.TestSymbolTable</node>
+    <node x="1413.0" y="366.0">src.Parser.DefinitionParser</node>
+    <node x="2345.0" y="546.0">src.AST.FreeExprAST</node>
+    <node x="196.5" y="486.0">src.AST.VarRefExprAST</node>
+    <node x="817.5" y="486.0">src.AST.BinaryExprAST</node>
+    <node x="1210.0" y="306.0">Tests.TestGeneratedIrIsAccepted</node>
+    <node x="1083.5" y="366.0">Tests.TestModuleLoader</node>
+    <node x="978.0" y="306.0">Tests.TestEndToEnd</node>
+    <node x="539.0" y="546.0">src.AST.LoopJumpAST</node>
+    <node x="2274.5" y="486.0">src.AST.IfAST</node>
+    <node x="1119.0" y="546.0">src.AST.UnaryExprAST</node>
+    <node x="1140.5" y="166.0">src.Parser.StructRegistry</node>
+    <node x="1057.0" y="226.0">Tests.TestLexer</node>
+    <node x="879.5" y="366.0">src.Parser.VariableParser</node>
+    <node x="979.0" y="166.0">Tests.ZFixtures</node>
+    <node x="99.0" y="546.0">src.AST.StringExprAST</node>
+    <node x="2444.5" y="486.0">src.AST.BoolExprAST</node>
+    <node x="864.5" y="226.0">Tests.TestIRBuilder</node>
+    <node x="1322.0" y="546.0">src.AST.DeclaratorExprAST</node>
+    <node x="737.0" y="306.0">Tests.TestZTypeCoverage</node>
+    <node x="623.0" y="366.0">Tests.TestMainBranches</node>
+    <node x="1020.0" y="486.0">src.AST.ParenExprAST</node>
+    <node x="511.5" y="306.0">src.AST.AstInternalsTest</node>
+    <node x="763.0" y="166.0">src.Parser.HeaderParser</node>
+    <node x="678.0" y="226.0">src.Parser.RetParser</node>
+    <node x="1450.0" y="486.0">src.AST.ArrayIdxExprAST</node>
+    <node x="399.5" y="366.0">src.Parser.ParserContext</node>
+    <node x="274.0" y="306.0">src.Parser.BranchesParser</node>
+    <node x="571.5" y="166.0">src.Parser.TypeParser</node>
+    <node x="470.0" y="226.0">src.Parser.ArrayParser</node>
+    <node x="368.5" y="166.0">Tests.TestImports</node>
+    <node x="83.5" y="-14.0">src.Parser.TypeRef</node>
+    <node x="294.0" y="226.0">src.Lexer.Lexer</node>
+    <node x="157.5" y="366.0">Tests.TestMoreLexer</node>
+    <node x="173.5" y="166.0">Tests.TestParser</node>
+    <node x="-30.0" y="166.0">src.Codegen.TypeLayout</node>
+    <node x="667.0" y="486.0">src.AST.RetAST</node>
+    <node x="-129.0" y="226.0">src.Parser.LoopParser</node>
+    <node x="59.5" y="306.0">Tests.TestOperators</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="src.AST.DerefExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1980.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.ArrayAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1660.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.CallExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="520.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.AssignThroughPointerExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1820.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.UnaryExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1200.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.DeclaratorExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1420.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.NumberExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="400.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.FieldAccessExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="-40.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.ArrayIdxExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1540.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.ExternExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2720.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.BlockAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2080.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.ForAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="800.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.StringExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="180.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.BinaryExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="900.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.Parser.ZType" target="src.Parser.TypeRef" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2820.0" y="140.0" />
+      <point x="140.0" y="140.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.AllocExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1000.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.ParenExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1100.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.VarRefExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="280.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.StructDeclAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="1300.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.AddressOfExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2200.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.FunctionAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2620.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.RetAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="720.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.FreeExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2420.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.IfAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2320.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.LoopJumpAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="620.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.AssignExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="80.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.BoolExprAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2520.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.Parser.StructType" target="src.Parser.TypeRef" relationship="REALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+    <edge source="src.AST.StructLiteralAST" target="src.AST.ExprAST" relationship="GENERALIZATION">
+      <point x="0.0" y="-14.0" />
+      <point x="2840.0" y="460.0" />
+      <point x="40.0" y="460.0" />
+      <point x="0.0" y="14.0" />
+    </edge>
+  </edges>
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="0.3797028137843819" showDependencies="false" x="1436.4999999999995" y="289.9999999999998" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

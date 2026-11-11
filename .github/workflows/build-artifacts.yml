@@ -1,0 +1,284 @@
+name: Build release artifacts
+
+on:
+  workflow_call:
+    inputs:
+      channel:
+        description: "Distribution channel: nightly, staging or production"
+        type: string
+        required: true
+      version:
+        description: "Version written in the release notes (e.g. v1.2.0 or nightly)"
+        type: string
+        required: true
+
+jobs:
+  build:
+    name: Build (${{ inputs.channel }}, ${{ matrix.arch }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up GraalVM (JDK 21, includes native-image)
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: maven
+
+      - name: Set up the LLVM toolchain
+        shell: bash
+        run: scripts/ci/llvm.sh --install
+
+      - name: Set the artifact version
+        shell: bash
+        env:
+          CHANNEL: ${{ inputs.channel }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          if [[ "$VERSION" == v* ]]; then
+            artifact_version="${VERSION#v}"
+          elif [[ "$CHANNEL" == "nightly" ]]; then
+            artifact_version="1.0.0-nightly.$(date -u +%Y%m%d)"
+          else
+            artifact_version=""
+          fi
+          if [[ -n "$artifact_version" ]]; then
+            mvn --batch-mode --no-transfer-progress versions:set \
+              -DnewVersion="$artifact_version" -DgenerateBackupPoms=false
+          fi
+
+      - name: Build (tests + jar + native image)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mvn --batch-mode --no-transfer-progress -Pnative clean verify
+
+      - name: Smoke test the native image
+        run: scripts/ci/smoke-test.sh target/z-compiler
+
+      - name: Smoke test the runnable jar
+        if: matrix.arch == 'amd64'
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar=(target/z-compiler-*-all.jar)
+          scripts/ci/smoke-test.sh "${jar[0]}"
+
+      - name: Collect the artifacts
+        shell: bash
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          mv target/z-compiler "dist/z-linux-$ARCH"
+          chmod +x "dist/z-linux-$ARCH"
+          if [[ "$ARCH" == "amd64" ]]; then
+            jar=(target/z-compiler-*-all.jar)
+            cp "${jar[0]}" dist/z-compiler.jar
+            cp target/bom.json dist/z-compiler-sbom.json
+          fi
+
+      - name: Scan the SBOM for vulnerabilities
+        if: matrix.arch == 'amd64'
+        continue-on-error: true
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: sbom
+          scan-ref: dist/z-compiler-sbom.json
+          format: sarif
+          output: trivy-sbom.sarif
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '0'
+
+      - name: Upload the SBOM scan results
+        if: always() && matrix.arch == 'amd64' && hashFiles('trivy-sbom.sarif') != ''
+        continue-on-error: true
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: trivy-sbom.sarif
+          category: trivy-sbom
+
+      - name: Upload the platform artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-${{ matrix.arch }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+
+  package:
+    name: Assemble the release
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Download the platform artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: release-*
+          path: dist
+          merge-multiple: true
+
+      - name: Collect the artifacts, checksums and notes
+        shell: bash
+        env:
+          CHANNEL: ${{ inputs.channel }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          {
+            echo "## Z-Compiler ${VERSION} (${CHANNEL} channel)"
+            echo
+            echo "Built from commit \`${GITHUB_SHA}\` on $(date -u +'%Y-%m-%d %H:%M UTC')."
+            echo
+            echo "## Downloads"
+            echo
+            echo "| File | SHA-256 |"
+            echo "| ---- | ------- |"
+            ( cd dist && sha256sum z-linux-* z-compiler.jar z-compiler-sbom.json > SHA256SUMS.txt )
+            while read -r sum file; do
+              echo "| $file | \`$sum\` |"
+            done < dist/SHA256SUMS.txt
+            echo
+            echo "### Verify"
+            echo '```sh'
+            echo "sha256sum -c SHA256SUMS.txt"
+            echo '```'
+          } > dist/RELEASE_NOTES.md
+
+          cat dist/RELEASE_NOTES.md
+
+      - name: Upload the release artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-artifacts
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+
+  docker:
+    name: Docker image (${{ inputs.channel }})
+    needs: package
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+
+    steps:
+      - name: Checkout the image definition
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          sparse-checkout: docker
+
+      - name: Download the release artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: release-artifacts
+          path: dist
+
+      - name: Log in to the GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Date used by the nightly tags
+        if: inputs.channel == 'nightly'
+        run: echo "NIGHTLY_DATE=$(date -u +%Y%m%d)" >> "$GITHUB_ENV"
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=nightly,enable=${{ inputs.channel == 'nightly' }}
+            type=raw,value=nightly-${{ env.NIGHTLY_DATE }},enable=${{ inputs.channel == 'nightly' }}
+            type=raw,value=rc,enable=${{ inputs.channel == 'staging' }}
+            type=raw,value=latest,enable=${{ inputs.channel == 'production' }}
+            type=semver,pattern={{version}},enable=${{ inputs.channel == 'production' }}
+            type=semver,pattern={{major}}.{{minor}},enable=${{ inputs.channel == 'production' }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+        with:
+          platforms: arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: dist
+          file: docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Pick the image reference to scan
+        id: scan-ref
+        shell: bash
+        env:
+          CHANNEL: ${{ inputs.channel }}
+        run: |
+          set -euo pipefail
+          case "$CHANNEL" in
+            nightly) tag="nightly" ;;
+            staging) tag="rc" ;;
+            production) tag="latest" ;;
+            *) echo "::error::unknown channel: $CHANNEL"; exit 1 ;;
+          esac
+          echo "ref=ghcr.io/${GITHUB_REPOSITORY}:${tag}" >> "$GITHUB_OUTPUT"
+
+      - name: Scan the container image
+        continue-on-error: true
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ${{ steps.scan-ref.outputs.ref }}
+          format: sarif
+          output: trivy-image.sarif
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          vuln-type: os,library
+          exit-code: '0'
+        env:
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload the image scan results
+        if: always() && hashFiles('trivy-image.sarif') != ''
+        continue-on-error: true
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: trivy-image.sarif
+          category: trivy-image

@@ -1,0 +1,60 @@
+name: Changelog
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: changelog-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  changelog:
+    name: Update CHANGELOG.md
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Generate the changelog
+        uses: orhun/git-cliff-action@v4.9.1
+        with:
+          version: v2.14.2
+          config: cliff.toml
+          args: --verbose
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          OUTPUT: CHANGELOG.md
+
+      - name: Open the changelog pull request
+        id: pr
+        continue-on-error: true
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          token: ${{ secrets.CHANGELOG_TOKEN || secrets.GITHUB_TOKEN }}
+          add-paths: CHANGELOG.md
+          branch: changelog/update
+          delete-branch: true
+          commit-message: "docs: update changelog for ${{ github.ref_name }}"
+          title: "docs: update changelog for ${{ github.ref_name }}"
+          body: |
+            Update `CHANGELOG.md` with the changes from `${{ github.ref_name }}`.
+          labels: docs
+
+      - name: Warn if the pull request could not be created
+        if: steps.pr.outcome == 'failure'
+        shell: bash
+        run: |
+          echo "::warning::Could not create the changelog pull request. Enable 'Allow GitHub Actions to create and approve pull requests' under Settings > Actions > General, or set the CHANGELOG_TOKEN secret."

@@ -1,0 +1,38 @@
+name: Repository labels
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - '.github/labeler.yml'
+      - '.github/workflows/labels.yml'
+      - 'scripts/ci/ensure-labels.sh'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-labels
+  cancel-in-progress: false
+
+jobs:
+  ensure:
+    name: Create the missing labels
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write   # gh label create needs it
+
+    steps:
+      - name: Checkout the label definitions
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+          sparse-checkout: scripts
+
+      - name: Ensure the labels exist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: scripts/ci/ensure-labels.sh

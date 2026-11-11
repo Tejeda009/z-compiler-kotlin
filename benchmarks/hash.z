@@ -1,0 +1,14 @@
+extern printf(str | ...) -> int32
+
+proc main() {
+    uint64 iterations -> 50000000;
+    uint64 mask -> 1000000007;
+    uint64 hash -> 1469598103934665603;
+
+    for (uint64 i -> 0 | i < iterations | i + 1) {
+        hash -> (hash * 1099511628211 + i) % mask;
+    }
+
+    printf("%llu\n" | hash);
+    ret 0;
+}

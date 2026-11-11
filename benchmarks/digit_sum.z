@@ -1,0 +1,26 @@
+extern printf(str | ...) -> int32
+
+proc digitSum(int64 value) -> int64 {
+    int64 n -> value;
+    int64 sum -> 0;
+
+    for (int64 guard -> 0 | n > 0 | guard + 1) {
+        sum -> sum + n % 10;
+        n -> n / 10;
+    }
+
+    ret sum;
+}
+
+proc main(int32 argc) {
+    int64 seed -> argc;
+    int64 limit -> 60000000;
+    int64 total -> 0;
+
+    for (int64 i -> 1 | i < limit | i + 1) {
+        total -> total + digitSum(i + seed - 1);
+    }
+
+    printf("%lld\n" | total);
+    ret 0;
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "name": "src.Main.CompilerCmd",
+    "allDeclaredConstructors": true,
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true
+  },
+  {
+    "name": "src.Main.Main",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true
+  }
+]

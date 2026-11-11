@@ -1,0 +1,59 @@
+parser:
+  - changed-files:
+      - any-glob-to-any-file: 'src/Parser/**'
+
+codegen:
+  - changed-files:
+      - any-glob-to-any-file: 'src/Codegen/**'
+
+lexer:
+  - changed-files:
+      - any-glob-to-any-file: 'src/lexer/**'
+
+ast:
+  - changed-files:
+      - any-glob-to-any-file: 'src/AST/**'
+
+docker:
+  - changed-files:
+      - any-glob-to-any-file: 'docker/**'
+
+examples:
+  - changed-files:
+      - any-glob-to-any-file: 'examples/**'
+
+stdlib:
+  - changed-files:
+      - any-glob-to-any-file: 'stdlib/**'
+
+main:
+  - changed-files:
+      - any-glob-to-any-file: 'src/Main/**'
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'Tests/**'
+          - 'src/test/**'
+
+benchmarks:
+  - changed-files:
+      - any-glob-to-any-file: 'benchmarks/**'
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '*.md'
+          - 'docs/**'
+
+build:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'pom.xml'
+          - '.mvn/**'
+
+ci-cd:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/**'
+          - 'scripts/**'

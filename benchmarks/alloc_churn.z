@@ -1,0 +1,18 @@
+extern printf(str | ...) -> int32
+extern memset(ptr | int32 | uint64) -> ptr
+extern strnlen(ptr | uint64) -> uint64
+
+proc main() {
+    int64 iterations -> 2000000;
+    int64 checksum -> 0;
+
+    for (int64 i -> 0 | i < iterations | i + 1) {
+        ptr p -> alloc(64);
+        memset(p | i | 64);
+        checksum -> checksum + strnlen(p | 8);
+        free(p);
+    }
+
+    printf("%lld\n" | checksum);
+    ret 0;
+}

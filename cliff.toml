@@ -1,0 +1,50 @@
+[remote.github]
+owner = "the-big-zed"
+repo = "z-compiler"
+
+[changelog]
+header = """
+# Changelog
+
+All notable changes to Z-Compiler are documented in this file."""
+body = """
+
+{% if version %}\
+    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
+{% else %}\
+    ## [unreleased]
+{% endif %}\
+{% for entry in commits | commit_groups(groups=commit_parsers_groups) %}
+    ### {{ entry.group | striptags | trim | upper_first }}
+    {% for commit in entry.commits %}
+        - {% if commit.scope %}*({{ commit.scope }})* {% endif %}\
+            {% if commit.breaking %}[**breaking**] {% endif %}\
+            {{ commit.message | split(pat="\n") | first | upper_first }}\
+    {% endfor %}
+{% endfor %}
+"""
+trim = true
+
+[git]
+conventional_commits = false
+filter_unconventional = false
+split_commits = false
+commit_preprocessors = [
+  { pattern = '\\(#([0-9]+)\\)', replace = "([#${1}](https://github.com/the-big-zed/z-compiler/pull/${1}))" },
+]
+commit_parsers = [
+  { message = '^Merge', skip = true },
+  { message = '^Revert', group = "<!-- 8 -->Revert" },
+  { message = '(?i)^(test|tests|testing)', group = "<!-- 5 -->Tests" },
+  { message = '(?i)^(feat|add|added|implement|support)', group = "<!-- 0 -->Features" },
+  { message = '(?i)^(fix|fixed|bug|hotfix)', group = "<!-- 1 -->Bug Fixes" },
+  { message = '(?i)^(perf|optimi|speed)', group = "<!-- 2 -->Performance" },
+  { message = '(?i)^(refactor|rename|renamed|move|moved|restructure)', group = "<!-- 3 -->Refactoring" },
+  { message = '(?i)^(docs|doc|readme|documentation)', group = "<!-- 4 -->Documentation" },
+  { message = '(?i)^(ci|build|workflow|release|deploy)', group = "<!-- 6 -->CI/CD & Build" },
+  { message = '(?i)^(chore|deps|dependabot)', group = "<!-- 7 -->Maintenance" },
+  { message = '.*', group = "<!-- 9 -->Other Changes" },
+]
+tag_pattern = '^v[0-9]+\.[0-9]+\.[0-9]+.*'
+ignore_tags = 'nightly|milestone.*'
+sort_commits = "newest"

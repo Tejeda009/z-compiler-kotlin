@@ -1,0 +1,23 @@
+int32 limit -> 18 // global
+extern scanf(str | ...) -> int32
+extern printf(str | ...) -> int32
+
+proc verify(int32 el) -> bool {
+    if (el >= limit) {
+        ret true
+    }
+    ret false
+}
+
+proc main() {
+    int32 test
+    printf("Insert your age: ")
+    scanf("%d" | &test)
+    if (verify(test)) {
+        printf("Access granted")
+    } else {
+        printf("Access denied")
+    }
+
+    ret 281
+}

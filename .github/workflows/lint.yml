@@ -1,0 +1,53 @@
+name: Lint
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  merge_group:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  ACTIONLINT_VERSION: "1.7.12"
+  YAMLLINT_VERSION: "1.38.0"
+  MARKDOWNLINT_CLI2_VERSION: "0.24.0"
+
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  lint:
+    name: actionlint, yamllint, markdownlint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Install linters
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/tools"
+          curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash \
+            | bash -s -- "$ACTIONLINT_VERSION" "$HOME/tools"
+          echo "$HOME/tools" >> "$GITHUB_PATH"
+          pipx install "yamllint==$YAMLLINT_VERSION"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: actionlint (GitHub Actions workflows)
+        run: actionlint -color -verbose
+
+      - name: yamllint (YAML files)
+        run: yamllint -c .yamllint.yml .
+
+      - name: markdownlint (Markdown files)
+        run: npx --yes "markdownlint-cli2@$MARKDOWNLINT_CLI2_VERSION" "**/*.md" "#target" "#bin" "#dist"

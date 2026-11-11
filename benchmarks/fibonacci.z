@@ -1,0 +1,31 @@
+extern printf(str | ...) -> int32
+
+proc fib(uint64 n) -> uint64 {
+    uint64 a -> 0;
+    uint64 b -> 1;
+    uint64 c -> 0;
+
+    if (n == 0) {
+        ret a;
+    }
+
+    for (uint64 i -> 2 | i <= n | i + 1) {
+        c -> a + b;
+        a -> b;
+        b -> c;
+    }
+
+    ret b;
+}
+
+proc main() {
+    uint64 passes -> 20000000;
+    uint64 last -> 0;
+
+    for (uint64 i -> 0 | i < passes | i + 1) {
+        last -> last + fib(i % 90);
+    }
+
+    printf("%llu\n" | last);
+    ret 0;
+}

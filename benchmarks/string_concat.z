@@ -1,0 +1,18 @@
+extern printf(str | ...) -> int32
+extern strlen(str) -> uint64
+
+proc main() {
+    str left -> "abcdefghijklmnopqrstuvwxyz0123456789";
+    str right -> "ABCDEFGHIJKLMNOPQRSTUVWXYZ9876543210";
+    int64 iterations -> 1000000;
+    int64 checksum -> 0;
+
+    for (int64 i -> 0 | i < iterations | i + 1) {
+        str joined -> left + right;
+        checksum -> checksum + strlen(joined);
+        free(joined);
+    }
+
+    printf("%lld\n" | checksum);
+    ret 0;
+}

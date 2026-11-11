@@ -1,0 +1,24 @@
+extern printf(str | ...) -> int32
+
+proc ackermann(int64 m | int64 n) -> int64 {
+    if (m == 0) {
+        ret n + 1;
+    }
+    if (n == 0) {
+        ret ackermann(m - 1 | 1);
+    }
+    ret ackermann(m - 1 | ackermann(m | n - 1));
+}
+
+proc main(int32 argc) {
+    int64 rounds -> 100;
+    int64 seed -> argc;
+    int64 total -> 0;
+
+    for (int64 i -> 0 | i < rounds | i + 1) {
+        total -> total + ackermann(3 | 4 + ((seed + i) % 5));
+    }
+
+    printf("%lld\n" | total);
+    ret 0;
+}

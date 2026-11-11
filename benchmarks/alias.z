@@ -1,0 +1,23 @@
+extern printf(str | ...) -> int32
+
+proc step(mut uint64* a | mut uint64* b | mut uint64* c | mut uint64* d) -> void {
+    *a -> *a * *a + 1;
+    *b -> *b * *b + 2;
+    *c -> *c * *c + 3;
+    *d -> *d * *d + 4;
+}
+
+proc main(int32 argc) {
+    uint64 base -> argc;
+    uint64 a -> base + 1;
+    uint64 b -> base + 2;
+    uint64 c -> base + 3;
+    uint64 d -> base + 4;
+
+    for (uint64 i -> 0 | i < 50000000 | i + 1) {
+        step(&a | &b | &c | &d);
+    }
+
+    printf("%llu\n" | a + b + c + d);
+    ret 0;
+}

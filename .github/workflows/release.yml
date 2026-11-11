@@ -1,0 +1,138 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "release tag"
+        required: true
+        type: string
+
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Validate the tag and pick the channel
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    outputs:
+      channel: ${{ steps.determine-target.outputs.channel }}
+      tag_name: ${{ steps.determine-target.outputs.tag_name }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Determine and validate tag
+        id: determine-target
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git fetch --tags origin main:refs/remotes/origin/main
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+            SHA="${{ github.sha }}"
+
+            if ! git rev-parse --verify --quiet "refs/tags/$TAG^{commit}" > /dev/null; then
+              echo "::notice::Tag $TAG does not exist. Creating it at commit $SHA..."
+              git config user.name "github-actions[bot]"
+              git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git tag -a "$TAG" -m "Release $TAG (triggered manually)" "$SHA"
+              git push origin "$TAG"
+            fi
+          else
+            TAG="${{ github.ref_name }}"
+            SHA="${{ github.sha }}"
+          fi
+
+          if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Tag '$TAG' is not a semantic version tag (expected vMAJOR.MINOR.PATCH)."
+            exit 1
+          fi
+
+          if ! git merge-base --is-ancestor "$SHA" origin/main; then
+            echo "::error::Tag '$TAG' (commit $SHA) does not point to a commit of the 'main' branch."
+            exit 1
+          fi
+
+          if [[ "$TAG" == *-* ]]; then
+            channel=staging
+          else
+            channel=production
+          fi
+
+          echo "Releasing $TAG on the $channel channel"
+          echo "channel=$channel" >> "$GITHUB_OUTPUT"
+          echo "tag_name=$TAG" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build the release binaries
+    needs: prepare
+    uses: ./.github/workflows/build-artifacts.yml
+    with:
+      channel: ${{ needs.prepare.outputs.channel }}
+      version: ${{ needs.prepare.outputs.tag_name }}
+    permissions:
+      contents: read
+      packages: write
+      security-events: write
+
+  publish:
+    name: Publish the GitHub release
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+
+    steps:
+      - name: Download the artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: release-artifacts
+          path: dist
+
+      - name: Attest the build provenance (production only)
+        if: needs.prepare.outputs.channel == 'production'
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: |
+            dist/z-linux-amd64
+            dist/z-linux-arm64
+            dist/z-compiler.jar
+            dist/z-compiler-sbom.json
+
+      - name: Publish
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ needs.prepare.outputs.tag_name }}
+          name: Z-Compiler ${{ needs.prepare.outputs.tag_name }}
+          body_path: dist/RELEASE_NOTES.md
+          generate_release_notes: true
+          prerelease: ${{ needs.prepare.outputs.channel == 'staging' }}
+          make_latest: ${{ needs.prepare.outputs.channel == 'production' }}
+          fail_on_unmatched_files: true
+          files: |
+            dist/z-linux-amd64
+            dist/z-linux-arm64
+            dist/z-compiler.jar
+            dist/z-compiler-sbom.json
+            dist/SHA256SUMS.txt

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/home/t3j3da/IdeaProjects/z-compiler/src/Lexer</OriginalElement>
+  <nodes>
+    <node x="-24.0" y="420.0">src.Lexer.Lexer.Tokens</node>
+    <node x="-61.0" y="-113.0">src.Lexer.Lexer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="src.Lexer.Lexer.Tokens" target="src.Lexer.Lexer" relationship="INNER_CLASS">
+      <point x="0.0" y="-724.5" />
+      <point x="0.0" y="256.5" />
+    </edge>
+  </edges>
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="0.44305694305694304" showDependencies="false" x="83.5" y="888.0000000000001" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

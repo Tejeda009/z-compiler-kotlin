@@ -1,0 +1,19 @@
+extern scanf(str | ...) -> int32
+extern printf(str | ...) -> int32
+
+proc add(int32 a | int32 b) -> int32 {
+    ret a + b
+}
+
+proc main() {
+    int32 sum -> 0
+    for (int32 i -> 0 | i < 5 | i + 1) {
+        int32 dummy
+        printf("Insert number %d: " | i)
+        scanf("%d" | &dummy)
+        sum -> add(sum | dummy)
+    }
+
+    printf("The sum is: %d" | sum)
+    ret 281
+}

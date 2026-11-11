@@ -1,0 +1,16 @@
+extern printf(str | ...) -> int32
+
+proc fib(int64 n) -> int64 {
+    if (n < 2) {
+        ret n;
+    }
+    ret fib(n - 1) + fib(n - 2);
+}
+
+proc main(int32 argc) {
+    int64 seed -> argc;
+    int64 n -> 40 + seed;
+
+    printf("%lld\n" | fib(n));
+    ret 0;
+}

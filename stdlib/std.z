@@ -1,0 +1,313 @@
+extern printf(str | ...) -> int32
+extern scanf(str | ...) -> int32
+
+// absolute
+extern abs(int32) -> int32
+extern labs(int64) -> int64
+extern llabs(int64) -> int64
+extern fabs(flt64) -> flt64
+
+// string -> number
+extern atof(str) -> flt64
+extern atoi(str) -> int32
+extern atol(str) -> int64
+extern atoll(str) -> int64
+
+// process
+extern exit(int32) -> void
+extern abort() -> void
+extern system(str) -> int32
+
+// random
+extern rand() -> int32
+extern srand(uint32) -> void
+
+// ctype.h
+extern isalnum(int32) -> int32
+extern isalpha(int32) -> int32
+extern isdigit(int32) -> int32
+extern islower(int32) -> int32
+extern ispunct(int32) -> int32
+extern isspace(int32) -> int32
+extern isupper(int32) -> int32
+extern isxdigit(int32) -> int32
+extern tolower(int32) -> int32
+extern toupper(int32) -> int32
+
+// string.h
+extern strlen(str) -> uint64
+extern strcmp(str | str) -> int32
+extern strncmp(str | str | uint64) -> int32
+
+// stdio.h
+extern getchar() -> int32
+extern putchar(int32) -> int32
+extern puts(str) -> int32
+
+// math.h
+extern acos(flt64) -> flt64
+extern acosh(flt64) -> flt64
+extern asin(flt64) -> flt64
+extern asinh(flt64) -> flt64
+extern atan(flt64) -> flt64
+extern atan2(flt64 | flt64) -> flt64
+extern atanh(flt64) -> flt64
+extern cbrt(flt64) -> flt64
+extern ceil(flt64) -> flt64
+extern cos(flt64) -> flt64
+extern cosh(flt64) -> flt64
+extern exp(flt64) -> flt64
+extern exp2(flt64) -> flt64
+extern floor(flt64) -> flt64
+extern fmax(flt64 | flt64) -> flt64
+extern fmin(flt64 | flt64) -> flt64
+extern fmod(flt64 | flt64) -> flt64
+extern hypot(flt64 | flt64) -> flt64
+extern log(flt64) -> flt64
+extern log10(flt64) -> flt64
+extern log2(flt64) -> flt64
+extern pow(flt64 | flt64) -> flt64
+extern round(flt64) -> flt64
+extern sin(flt64) -> flt64
+extern sinh(flt64) -> flt64
+extern sqrt(flt64) -> flt64
+extern tan(flt64) -> flt64
+extern tanh(flt64) -> flt64
+extern trunc(flt64) -> flt64
+
+proc abs(int32 value) -> int32 {
+    ret abs(value)
+}
+
+proc labs(int64 value) -> int64 {
+    ret labs(value)
+}
+
+proc llabs(int64 value) -> int64 {
+    ret llabs(value)
+}
+
+proc fabs(flt64 value) -> flt64 {
+    ret fabs(value)
+}
+
+proc atof(str value) -> flt64 {
+    ret atof(value)
+}
+
+proc atoi(str value) -> int32 {
+    ret atoi(value)
+}
+
+proc atol(str value) -> int64 {
+    ret atol(value)
+}
+
+proc atoll(str value) -> int64 {
+    ret atoll(value)
+}
+
+proc exit(int32 code) -> void {
+    exit(code)
+}
+
+proc abort() -> void {
+    abort()
+}
+
+proc system(str command) -> int32 {
+    ret system(command)
+}
+
+proc rand() -> int32 {
+    ret rand()
+}
+
+proc srand(uint32 seed) -> void {
+    srand(seed)
+}
+
+proc isalnum(int32 value) -> int32 {
+    ret isalnum(value)
+}
+
+proc isalpha(int32 value) -> int32 {
+    ret isalpha(value)
+}
+
+proc isdigit(int32 value) -> int32 {
+    ret isdigit(value)
+}
+
+proc islower(int32 value) -> int32 {
+    ret islower(value)
+}
+
+proc ispunct(int32 value) -> int32 {
+    ret ispunct(value)
+}
+
+proc isspace(int32 value) -> int32 {
+    ret isspace(value)
+}
+
+proc isupper(int32 value) -> int32 {
+    ret isupper(value)
+}
+
+proc isxdigit(int32 value) -> int32 {
+    ret isxdigit(value)
+}
+
+proc tolower(int32 value) -> int32 {
+    ret tolower(value)
+}
+
+proc toupper(int32 value) -> int32 {
+    ret toupper(value)
+}
+
+proc strlen(str value) -> uint64 {
+    ret strlen(value)
+}
+
+proc strcmp(str left | str right) -> int32 {
+    ret strcmp(left | right)
+}
+
+proc strncmp(str left | str right | uint64 count) -> int32 {
+    ret strncmp(left | right | count)
+}
+
+proc getchar() -> int32 {
+    ret getchar()
+}
+
+proc putchar(int32 value) -> int32 {
+    ret putchar(value)
+}
+
+proc puts(str value) -> int32 {
+    ret puts(value)
+}
+
+proc acos(flt64 value) -> flt64 {
+    ret acos(value)
+}
+
+proc acosh(flt64 value) -> flt64 {
+    ret acosh(value)
+}
+
+proc asin(flt64 value) -> flt64 {
+    ret asin(value)
+}
+
+proc asinh(flt64 value) -> flt64 {
+    ret asinh(value)
+}
+
+proc atan(flt64 value) -> flt64 {
+    ret atan(value)
+}
+
+proc atan2(flt64 y | flt64 x) -> flt64 {
+    ret atan2(y | x)
+}
+
+proc atanh(flt64 value) -> flt64 {
+    ret atanh(value)
+}
+
+proc cbrt(flt64 value) -> flt64 {
+    ret cbrt(value)
+}
+
+proc ceil(flt64 value) -> flt64 {
+    ret ceil(value)
+}
+
+proc cos(flt64 value) -> flt64 {
+    ret cos(value)
+}
+
+proc cosh(flt64 value) -> flt64 {
+    ret cosh(value)
+}
+
+proc exp(flt64 value) -> flt64 {
+    ret exp(value)
+}
+
+proc exp2(flt64 value) -> flt64 {
+    ret exp2(value)
+}
+
+proc floor(flt64 value) -> flt64 {
+    ret floor(value)
+}
+
+proc fmax(flt64 left | flt64 right) -> flt64 {
+    ret fmax(left | right)
+}
+
+proc fmin(flt64 left | flt64 right) -> flt64 {
+    ret fmin(left | right)
+}
+
+proc fmod(flt64 left | flt64 right) -> flt64 {
+    ret fmod(left | right)
+}
+
+proc hypot(flt64 left | flt64 right) -> flt64 {
+    ret hypot(left | right)
+}
+
+proc log(flt64 value) -> flt64 {
+    ret log(value)
+}
+
+proc log10(flt64 value) -> flt64 {
+    ret log10(value)
+}
+
+proc log2(flt64 value) -> flt64 {
+    ret log2(value)
+}
+
+proc pow(flt64 base | flt64 exponent) -> flt64 {
+    ret pow(base | exponent)
+}
+
+proc round(flt64 value) -> flt64 {
+    ret round(value)
+}
+
+proc sin(flt64 value) -> flt64 {
+    ret sin(value)
+}
+
+proc sinh(flt64 value) -> flt64 {
+    ret sinh(value)
+}
+
+proc sqrt(flt64 value) -> flt64 {
+    ret sqrt(value)
+}
+
+proc tan(flt64 value) -> flt64 {
+    ret tan(value)
+}
+
+proc tanh(flt64 value) -> flt64 {
+    ret tanh(value)
+}
+
+proc trunc(flt64 value) -> flt64 {
+    ret trunc(value)
+}
+
+proc println(int64 value) -> void {
+    printf("%lld\n" | value)
+    ret
+}

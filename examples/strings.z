@@ -1,0 +1,9 @@
+extern printf(str | ...) -> int32
+
+proc main() {
+    str hello -> "hello"
+    str world -> " world"
+    str greeting -> hello + world
+    printf("%s" | greeting)
+    ret 0
+}

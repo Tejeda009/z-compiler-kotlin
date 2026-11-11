@@ -1,0 +1,33 @@
+//import std
+extern printf(str | ...) -> int32
+
+proc test() -> void {
+    printf("test")
+    //std.println(34)
+    ret
+}
+
+proc test2(int32 test | ... int32 vararg) -> void {
+    int32 test2 -> vararg.1
+    ret 0
+}
+
+proc test3(int32* t) -> void {
+    str test -> "test"
+    free(test)
+}
+
+proc test4(int32 count) -> int32 {
+    for (int32 i -> 0 | i < count | i -> i +1 ) {
+        int32 sum -> 0
+    }
+    ret 0
+}
+
+proc main() {
+    int32 t -> 0
+    test3(&t)
+    test()
+    int32 re -> test4(3)
+    ret 61
+}

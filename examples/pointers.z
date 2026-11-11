@@ -1,0 +1,12 @@
+proc inc(int32* p) -> int32 {
+    *p -> *p + 1
+    ret 0
+}
+
+proc main() {
+    int32 x -> 0
+    inc(&x)
+    inc(&x)
+    inc(&x)
+    ret x        // 3
+}

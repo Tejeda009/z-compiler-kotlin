@@ -1,0 +1,138 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  merge_group:
+  workflow_dispatch:
+    inputs:
+      native:
+        description: "Also build the GraalVM native image (slow, ~4 min)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build, test & smoke test (Java ${{ matrix.java }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      checks: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ "21", "25" ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Java ${{ matrix.java }}
+        uses: actions/setup-java@v6
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+
+      - name: Set up the LLVM toolchain
+        shell: bash
+        run: scripts/ci/llvm.sh --install
+
+      - name: Build and test (mvn clean verify)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mvn --batch-mode --no-transfer-progress clean verify
+
+      - name: Smoke test the runnable jar
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar=(target/z-compiler-*-all.jar)
+          scripts/ci/smoke-test.sh "${jar[0]}"
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: surefire-reports-java-${{ matrix.java }}
+          path: target/surefire-reports/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Publish test results
+        if: always()
+        uses: mikepenz/action-junit-report@v6
+        with:
+          report_paths: target/surefire-reports/TEST-*.xml
+          check_name: Test results (Java ${{ matrix.java }})
+          detailed_summary: true
+          include_passed: false
+          annotate_only: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+
+      - name: Upload coverage to Codecov
+        if: matrix.java == '21'
+        uses: codecov/codecov-action@v7
+        with:
+          files: target/site/jacoco/jacoco.xml
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN || secrets.CODECOV_ORG_TOKEN }}
+
+      - name: Upload the runnable jar
+        if: matrix.java == '21'
+        uses: actions/upload-artifact@v7
+        with:
+          name: z-compiler-jar
+          path: target/z-compiler-*-all.jar
+          if-no-files-found: error
+          retention-days: 7
+
+  native:
+    name: Native image (manual)
+    if: github.event_name == 'workflow_dispatch' && inputs.native
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up GraalVM (JDK 21)
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          cache: maven
+
+      - name: Build the native image (tests included)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mvn --batch-mode --no-transfer-progress -Pnative clean verify
+
+      - name: Smoke test the native image
+        run: scripts/ci/smoke-test.sh target/z-compiler
+
+      - name: Upload the native image
+        uses: actions/upload-artifact@v7
+        with:
+          name: z-compiler-linux-amd64
+          path: target/z-compiler
+          if-no-files-found: error
+          retention-days: 7

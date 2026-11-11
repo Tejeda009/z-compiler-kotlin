@@ -1,0 +1,62 @@
+{
+  "cases": [
+    {
+      "name": "fibonacci",
+      "category": "compute",
+      "description": "Iterative Fibonacci with unsigned 64-bit arithmetic"
+    },
+    {
+      "name": "collatz",
+      "category": "compute",
+      "description": "Collatz step count for the first million starting values"
+    },
+    {
+      "name": "pi",
+      "category": "compute",
+      "description": "Leibniz series for pi with double precision"
+    },
+    {
+      "name": "primes",
+      "category": "compute",
+      "description": "Trial-division prime count up to five million"
+    },
+    {
+      "name": "ackermann",
+      "category": "compute",
+      "description": "Recursive Ackermann calls with runtime-varying arguments"
+    },
+    {
+      "name": "mandelbrot",
+      "category": "compute",
+      "description": "Mandelbrot escape iterations over a fixed image"
+    },
+    {
+      "name": "hash",
+      "category": "compute",
+      "description": "64-bit multiply-add-modulo hash loop"
+    },
+    {
+      "name": "alias",
+      "category": "alias",
+      "description": "Four independent 64-bit state words updated through pointers"
+    },
+    {
+      "name": "alloc_churn",
+      "category": "allocation",
+      "description": "Allocate, touch, and free a small block per iteration"
+    },
+    {
+      "name": "string_concat",
+      "category": "strings",
+      "description": "Concatenate, measure, and free two strings per iteration"
+    },
+    {"name": "fib",          "category": "calls",    "description": "recursion"},
+    {"name": "collatz",      "category": "integer",  "description": "branches"},
+    {"name": "gcd_sum",      "category": "integer",  "description": "Euclide"},
+    {"name": "primes",       "category": "integer",  "description": "divisions with break"},
+    {"name": "digit_sum",    "category": "integer",  "description": "Divisions for a constant with loops"},
+    {"name": "monte_carlo",  "category": "float",    "description": "LCG integer, convertions"},
+    {"name": "concat_chain", "category": "memory",   "description": "concatenations and free"},
+    {"name": "ptr_accum",    "category": "pointers", "description": "pointers, vectorizations"}
+    ]
+}

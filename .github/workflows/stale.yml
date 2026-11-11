@@ -1,0 +1,59 @@
+name: Stale issues and pull requests
+
+on:
+  schedule:
+    - cron: '31 16 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  stale:
+    name: Mark and close stale items
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/stale@v11
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          days-before-pr-stale: 30
+          days-before-pr-close: 14
+          stale-pr-message: >
+            This pull request has been automatically marked as stale because it has
+            had no activity for 30 days. It will be closed in 14 days if no new
+            activity occurs. Comment or push to keep it open - if you are still
+            working on it, say so and it will not be closed.
+
+          days-before-issue-stale: 60
+          days-before-issue-close: 14
+          stale-issue-message: >
+            This issue has been automatically marked as stale because it has had no
+            activity for 60 days. It will be closed in 14 days if no new activity
+            occurs. Add a comment with additional context to keep it open.
+
+          close-pr-message: >
+            Closing this pull request as stale. Feel free to reopen it (or open a new
+            one) if you would like to continue working on it.
+          close-issue-message: >
+            Closing this issue as stale. Please reopen it if the problem is still
+            relevant.
+
+          stale-pr-label: 'no-pr-activity'
+          stale-issue-label: 'no-issue-activity'
+          close-pr-label: 'pr-inactive'
+          close-issue-label: 'issue-inactive'
+
+          exempt-issue-labels: 'pinned,security,blocked,work-in-progress'
+          exempt-pr-labels: 'pinned,security,blocked,work-in-progress'
+          exempt-all-milestones: true
+          exempt-draft-pr: true
+
+          operations-per-run: 60
+          remove-stale-when-updated: true
+          delete-branch: false

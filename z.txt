@@ -1,0 +1,47 @@
+proc name (int64 name | int64 name) -> returnType {
+
+
+	ret 281
+
+}
+
+int64 name -> 281
+
+
+
+types: {
+ [int | dim] name = [value | value | value ]
+
+ int64
+ int32
+
+ flt32
+ flt64
+
+ str
+
+ uint32
+ uint64
+
+ bool // rip
+
+ ret
+}
+
+
+cn int64 =
+
+if (cond) {
+}
+eif
+
+else
+
+for (type name -> init | cond | op) {
+
+}
+
+* / + -
+
+
+array[i]

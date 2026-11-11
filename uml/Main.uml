@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/home/t3j3da/IdeaProjects/z-compiler/src/Main</OriginalElement>
+  <nodes>
+    <node x="-74.5" y="574.5">src.Main.CompilerCmd</node>
+    <node x="162.5" y="-13.5">src.Main.ModuleLoader</node>
+    <node x="-80.0" y="314.5">src.Main.Main</node>
+  </nodes>
+  <notes />
+  <edges />
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="0.8580952380952381" showDependencies="false" x="233.0" y="511.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

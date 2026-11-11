@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/home/t3j3da/IdeaProjects/z-compiler/src/Codegen</OriginalElement>
+  <nodes>
+    <node x="-74.05746831293627" y="-13.079390160883122">src.Codegen.IRBuilder</node>
+    <node x="-45.965725931292724" y="2435.802349687673">src.Codegen.SymbolTable</node>
+    <node x="414.7656769451687" y="2362.9786846836346">src.Codegen.Loop</node>
+    <node x="331.82220561951715" y="2695.9382848556006">src.Codegen.TypeLayout</node>
+  </nodes>
+  <notes />
+  <edges />
+  <RemovedNodes />
+  <RemovedEdges />
+  <settings layout="Hierarchic Compact" zoom="0.3022475679302248" showDependencies="false" x="301.5" y="1476.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

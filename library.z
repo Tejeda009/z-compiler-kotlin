@@ -1,0 +1,4 @@
+int32 global -> 0
+proc math(int32 a) {
+    ret a + 1
+}

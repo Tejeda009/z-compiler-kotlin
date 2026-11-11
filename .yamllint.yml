@@ -1,0 +1,25 @@
+extends: default
+
+rules:
+  truthy:
+    check-keys: false
+  document-start: disable
+  line-length: disable
+  comments:
+    min-spaces-from-content: 1
+  indentation:
+    spaces: 2
+    indent-sequences: whatever
+  comments-indentation: disable
+  empty-lines:
+    max: 2
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+
+ignore: |
+  target/
+  bin/
