@@ -41,7 +41,7 @@ jobs:
       - name: Open the changelog pull request
         id: pr
         continue-on-error: true
-        uses: peter-evans/create-pull-request@v8.1.1
+        uses: peter-evans/create-pull-request@v8.1.2
         with:
           token: ${{ secrets.CHANGELOG_TOKEN || secrets.GITHUB_TOKEN }}
           add-paths: CHANGELOG.md

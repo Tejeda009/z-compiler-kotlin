@@ -75,7 +75,7 @@ jobs:
         id: pr
         if: ${{ github.event_name == 'schedule' || inputs.update_results == true }}
         continue-on-error: true
-        uses: peter-evans/create-pull-request@v8.1.1
+        uses: peter-evans/create-pull-request@v8.1.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           add-paths: benchmarks/RESULTS.md
